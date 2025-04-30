@@ -2,47 +2,30 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>NLP - Emotion Detection</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-          crossorigin="anonymous">
-    <style>
-        .center-heading {
-            text-align: center;
-        }
-        .container {
-            max-width: 700px;
-            margin-top: 50px;
-        }
-    </style>
+    <title>Emotion Detection</title>
 </head>
 <body>
-<div class="container">
-    <div class="card">
-        <div class="card-body">
-            <h1 class="center-heading">NLP - Emotion Detection</h1>
+    <h1>Emotion Detection</h1>
+    <form method="POST" action="/emotionDetector">
+        <label for="textToAnalyze">Enter text to analyze:</label><br>
+        <textarea id="textToAnalyze" name="textToAnalyze" rows="4" cols="50"></textarea><br><br>
+        <input type="submit" value="Analyze">
+    </form>
 
-            <form method="POST" action="/emotionDetector">
-                <div class="form-group">
-                    <label for="textToAnalyze">Please enter the text to be analyzed</label>
-                    <textarea class="form-control" name="textToAnalyze" id="textToAnalyze" rows="3"></textarea>
-                </div>
+    {% if error %}
+        <p style="color:red;">{{ error }}</p>
+    {% endif %}
 
-                <div class="text-center">
-                    <button type="submit" class="btn btn-secondary">Run Sentiment Analysis</button>
-                </div>
-            </form>
-
-            <hr />
-
-            <h2 class="center-heading">Result of Emotion Detection</h2>
-            <div id="system_response" class="mt-4 text-center">
-                {% if response %}
-                    <pre>{{ response }}</pre>
-                {% endif %}
-            </div>
-        </div>
-    </div>
-</div>
+    {% if result %}
+        <h2>Analysis Result:</h2>
+        <ul>
+            <li>Anger: {{ result.anger }}</li>
+            <li>Disgust: {{ result.disgust }}</li>
+            <li>Fear: {{ result.fear }}</li>
+            <li>Joy: {{ result.joy }}</li>
+            <li>Sadness: {{ result.sadness }}</li>
+            <li>Dominant Emotion: {{ result.dominant_emotion }}</li>
+        </ul>
+    {% endif %}
 </body>
 </html>
